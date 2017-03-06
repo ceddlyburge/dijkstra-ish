@@ -1,20 +1,20 @@
 class RouteCandidate
- attr_accessor :atomic_routes
+ attr_accessor :legs
 
-  # atomic_routes is expected to be an array of AtomicRoute
-  def initialize(atomic_routes)
-    @atomic_routes = atomic_routes
+  # legs is expected to be an array of Leg
+  def initialize(legs)
+    @legs = legs
   end
 
   def distance
-      @atomic_routes.map{ | atomic_route | atomic_route.distance }.inject(:+) 
+      @legs.map{ | leg | leg.distance }.inject(:+)
   end
 
   def to_s
-      %Q[\nRoutes\nDistance #{distance.to_s}\n#{@atomic_routes.join("\n")}\nend\n]
+      %Q[\nRoutes\nDistance #{distance.to_s}\n#{@legs.join("\n")}\nend\n]
   end
 
   def ==(other_route_candidate)
-    other_route_candidate != nil && @atomic_routes.size == other_route_candidate.atomic_routes.size && @atomic_routes.lazy.zip(other_route_candidate.atomic_routes).all? { |x, y| x.from == y.from && x.to == y.to }
+    other_route_candidate != nil && @legs.size == other_route_candidate.legs.size && @legs.lazy.zip(other_route_candidate.legs).all? { |x, y| x.from == y.from && x.to == y.to }
   end
 end

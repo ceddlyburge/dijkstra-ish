@@ -1,25 +1,25 @@
 require "minitest/autorun"
-require_relative "atomic_route"
+require_relative "leg"
 require_relative "route_permutations"
 
 class RoutePermutationsTests < Minitest::Test
-  def test_single_atomicroute
+  def test_single_leg
     assert_equal 5, @route_permutations.shortest_distance("A", "B", [route("A", "B", 5)])
     assert_equal 12.5, @route_permutations.shortest_distance("A", "B", [route("A", "B", 12.5)])
     assert_equal -1, @route_permutations.shortest_distance("A", "B", [route("A", "B", -1)])
   end
 
-  def test_missing_single_atomicroute
+  def test_missing_single_leg
     assert_equal @no_such_route, @route_permutations.shortest_distance("A", "B", [route("B", "A", @unimportant)])
   end
   
-  def test_pick_second_atomicroute
+  def test_pick_second_leg
     assert_equal 4, @route_permutations.shortest_distance("B", "C", 
       [route("A", "B", @unimportant),
        route("B", "C", 4)])
   end
 
-  def test_pick_first_atomicroute
+  def test_pick_first_leg
     assert_equal 5, @route_permutations.shortest_distance("A", "B", 
      [route("A", "B", 5), 
       route("B", "C", @unimportant)])
@@ -105,8 +105,8 @@ class RoutePermutationsTests < Minitest::Test
          desired_routes([desired_route("A", "B"), desired_route("B", "A")]), \
          desired_routes([desired_route("A", "B"), desired_route("B", "A"), desired_route("A", "B")])],  
         @route_permutations \
-            .all_permutations_capped_at_atomic_route_count_from("A", maximum_stops, 
-                [route("A", "B", @unimportant), 
+            .all_permutations_capped_at_leg_count_from("A", maximum_stops,
+                                                       [route("A", "B", @unimportant),
                  route("B", "A", @unimportant)])
     )
   end
@@ -120,8 +120,8 @@ class RoutePermutationsTests < Minitest::Test
          desired_routes([desired_route("C", "E"), desired_route("E", "C"), desired_route("C", "E")]), 
          desired_routes([desired_route("C", "E"), desired_route("E", "C"), desired_route("C", "E"), desired_route("E", "C")])],
         @route_permutations \
-            .all_permutations_capped_at_atomic_route_count_from("C", maximum_stops, 
-                [route("C", "E", @unimportant), 
+            .all_permutations_capped_at_leg_count_from("C", maximum_stops,
+                                                       [route("C", "E", @unimportant),
                  route("E", "C", @unimportant)])
     )
   end
@@ -162,15 +162,15 @@ class RoutePermutationsTests < Minitest::Test
   end
 
   def route from, to, distance
-    return AtomicRoute.new from, to, distance
+    return Leg.new from, to, distance
   end
 
   def desired_route from, to
-    return AtomicRoute.new from, to, 0
+    return Leg.new from, to, 0
   end
 
-  def desired_routes atomic_routes 
-      RouteCandidate.new atomic_routes
+  def desired_routes legs
+      RouteCandidate.new legs
   end
 
 end
