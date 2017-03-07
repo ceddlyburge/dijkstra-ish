@@ -10,7 +10,11 @@ class RouteCandidate
       @legs.map{ | leg | leg.distance }.inject(:+)
   end
 
-  def to_s
+ def ending_point
+   @legs.last.to
+ end
+
+ def to_s
       %Q[\nRoutes\nDistance #{distance.to_s}\n#{@legs.join("\n")}\nend\n]
   end
 

@@ -33,10 +33,42 @@ Please note that ADR's 003 and 004 have been decided but not yet implemeneted.
 
 Thank you for the kind words.
 
-I would add that the average variable span and live time is short.
+I would add that the total variable span and live time is small.
 
-The submission was however weak in showing evidence of "object oriented programming skills" we're looking for:
 ### Encapsulation was weak, e.g. leading to coupling of permutations code into internals of route extension (look for law of demeter violations)
+
+#### Overview
+
+I think the statement "Encapsulation was weak" overstates the case.
+
+I have never come across a programmer that applies the Law of Demeter absolutely. I believe that the general wisdom is to weigh up the benefits of the encapsulation against the additional pass through code that is required. I notice that Martin Fowler would prefer it to be called the "Occasionally Useful Suggestion of Demeter"
+
+In the code that you are talking about, the RouteExtension class does have two good examples of meaningful encapsulation (services_town and retraces_existing_leg).
+
+I have looked at the code to look for opportunities to meaningfully increase encapsulation, and have added RouteCandidate.ending_point, which is used from lines 107 and 115 of route_candidate.rb.
+
+#### Specific Cases
+
+I think you are probably talking about these lines of code when you talk about the Law of Demeter violations from "permutations code into internals of route extension".
+
+##### Line 91: route_extension.route_candidate.distance
+
+This does violate the Law of Demeter and could be changed to route_extension.route_candidate_distance. 
+
+This would allow RouteExtension to change the way that the distance is calculated for the RouteCandidate without affecting the public interface.
+
+One reason not to do this is that this is a very unlikely scenairo.
+
+However, the most important reason is that the RoutePermutations class is already coupled to RouteCandidate.distance and RouteExtension is already coupled to RouteCandidate. This means that from the point of the RoutePermutations class, RouteExtension cannot swap the RouteCandidate class for something else, and that RouteCandidate.distance cannot be removed without breaking the encapsulation. 
+
+Implementing route_candidate_distance would allow RouteExtension to implement caching or something similar, but there is no need to do this as the call is so simple. RouteCandidate.distance is more complicated, and could potentially benefit from caching or a change in the algorithm, and this is already possible with the original design.
+
+Overall, I don't see any meaningful increase in encapsulation by making this change.
+
+##### Line 95: route_extension.atomic_routes.count
+
+I don't consider this to be a meaningful violation. legs is an array property on the public interface and count is a language feature, so I don't think there would be any benefit to changing it to route_extension.leg_count.
+
 
 - RouteExtension and RouteCandidate felt like both being routes that were used in slightly different contexts
 - really RoutePermutations was doing most (too much) of the work itself
@@ -52,8 +84,9 @@ I mostly disagree with this.
 
 "Track" is short, and is in the language of the domain, but the domain definition is not well defined.
 
-TODO
-I have however, changed AtomicRoute to Leg. If I were to do this in the real world I would want to introduce Leg to the domain.
+I have however, changed AtomicRoute to Leg. 
+
+If I were to do this in the real world I would want to introduce Leg to the domain.
 
 e.g. in RouteExtension class:
 - #atomic_routes - was actually atomic routes without/before extension (or legs without last)

@@ -104,7 +104,7 @@ class RoutePermutations
   end
 
   def leg_extends_route_candidate(leg, route_candidate)
-    leg.from == route_candidate.legs.last.to
+    leg.from == route_candidate.ending_point
   end
 
   def initial_route_candidates_starting_at_from(from, network_topology)
@@ -112,7 +112,7 @@ class RoutePermutations
   end
 
   def route_candidates_ending_at_to(route_candidates, to)
-    route_candidates.select { | route_candidate | route_candidate.legs.last.to == to }
+    route_candidates.select { | route_candidate | route_candidate.ending_point == to }
   end
 
   def shortest_route_candidate(route_candidates)
