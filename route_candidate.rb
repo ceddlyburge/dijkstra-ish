@@ -7,15 +7,15 @@ class RouteCandidate
   end
 
   def distance
-      @legs.map{ | leg | leg.distance }.inject(:+)
+    @legs.map{ | leg | leg.distance }.inject(:+)
   end
 
- def ending_point
+  def ending_point
    @legs.last.to
- end
+  end
 
- def to_s
-      %Q[\nRoutes\nDistance #{distance.to_s}\n#{@legs.join("\n")}\nend\n]
+  def to_s
+    %Q[\nRoutes\nDistance #{distance.to_s}\n#{@legs.join("\n")}\nend\n]
   end
 
   def ==(other_route_candidate)

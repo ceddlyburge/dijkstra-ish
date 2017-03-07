@@ -70,10 +70,19 @@ Overall, I don't see any meaningful increase in encapsulation by making this cha
 I don't consider this to be a meaningful violation. legs is an array property on the public interface and count is a language feature, so I don't think there would be any benefit to changing it to route_extension.leg_count.
 
 
-- RouteExtension and RouteCandidate felt like both being routes that were used in slightly different contexts
+### RouteExtension and RouteCandidate felt like both being routes that were used in slightly different contexts
+
+This is an interesting point, and I had a think about it, but in the end I mildly disagree for the following reasons.
+
+- The retraces_existing_leg method is a good fit in RouteExtension but does not as much make sense in RouteCandidate. 
+- RouteExtension has a specific initialise method, and I prefer to only have one constructor for each class where possible.
+- RouteExtension.route_candidate encapsulates a useful bit of logic that would not be easily possible if the class didn't exist.
+
+
 - really RoutePermutations was doing most (too much) of the work itself
 - simple use of instance data, e.g. for the invariant route topology used in route permutations, could have reduced a lot of code
 - naming of some classes and methods i found questionable:
+
 ### AtomicRoute was awkward naming. a route being composed of atomic routes? would have preferred a route composed of legs or tracks. admittedly, the trains problem is a bit loose with the word 'route' but i found this distracting.
 
 I mostly disagree with this. 
