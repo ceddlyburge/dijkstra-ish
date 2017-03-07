@@ -47,7 +47,7 @@ class RouteExtensions
         legs_that_extend_route_candidate(route_candidate)
       .map { | leg | RouteExtension.new route_candidate.legs, leg} \
       } \
-      .flatten.select { | route_extension | route_extension.leg != nil }
+      .flatten.select { | route_extension | route_extension.extension_leg != nil }
   end
 
   def legs_that_extend_route_candidate(route_candidate)

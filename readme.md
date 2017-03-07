@@ -109,9 +109,13 @@ If I were to do this in the real world I would want to introduce Leg to the doma
 
 ### RouteExtension.atomic_routes was awkward naming - it was actually atomic routes without/before extension (or legs without last)
 
-atomic_routes was an array of AtomicRoute, so in that respect the variable was well named. I think in your head you have equated an array of AtomicRoute to a RouteCandidate, but they are distinct concepts.
+atomic_routes was an array of AtomicRoute, so I would argue that the variable was well named. I think you have imagined that an array of AtomicRoute is the same thing as a RouteCandidate, but they are distinct concepts.
 
-- #atomic_route - was actually the extending/last atomic route
+However, I have renamed this to original_legs.
+
+### RouteExtension.atomic_route was awkward naming - it was actually the extending/last atomic route
+
+
 e.g NetworkTopology was really a NetworkTopologyParser. Again, could have been a stronger, more encapsulated network object, with some behaviour rather than just a holder of a collection of atomic routes.
 
 There were a couple of other things to call out:
