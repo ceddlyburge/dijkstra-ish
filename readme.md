@@ -80,12 +80,17 @@ This is an interesting point, and I had a think about it, but in the end I mildl
 
 ### Really RoutePermutations was doing most (too much) of the work itself
 
-I have introduced a new RouteExtensions class, which removes a lot of code from RoutePermutations, and probably more importantly improves the readability of the code in RoutePermutations.
+I have introduced a new RouteExtensions class, which removes a lot of code from RoutePermutations, and probably more importantly improves the readability of the code.
 
 TODO: fix up rubymine suggestions
 TODO: fix up non_retracing_permutations_from, shortest_distance and add to law of demeter comments
- 
-- simple use of instance data, e.g. for the invariant route topology used in route permutations, could have reduced a lot of code
+TODO: add comments to the public methods to state what the passed in variables should be
+
+### Simple use of instance data, e.g. for the invariant route topology used in route permutations, could have reduced a lot of code
+
+I have made network_topology an instance method of RoutePermutations.
+
+
 - naming of some classes and methods i found questionable:
 
 ### AtomicRoute was awkward naming. a route being composed of atomic routes? would have preferred a route composed of legs or tracks. admittedly, the trains problem is a bit loose with the word 'route' but i found this distracting.
