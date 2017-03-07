@@ -1,6 +1,6 @@
-require "minitest/autorun"
-require_relative "leg"
-require_relative "route_permutations"
+require 'minitest/autorun'
+require_relative 'leg'
+require_relative 'route_permutations'
 
 class RoutePermutationsTests < Minitest::Test
   def test_single_leg

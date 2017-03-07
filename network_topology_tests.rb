@@ -1,6 +1,6 @@
-require "minitest/autorun"
-require_relative "leg"
-require_relative "network_topology.rb"
+require 'minitest/autorun'
+require_relative 'leg'
+require_relative 'network_topology.rb'
 
 class NetworkTopologyTests < Minitest::Test
     def test_singe_leg

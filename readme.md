@@ -43,7 +43,7 @@ I think the statement "Encapsulation was weak" overstates the case.
 
 I have never come across a programmer that applies the Law of Demeter absolutely. I believe that the general wisdom is to weigh up the benefits of the encapsulation against the additional pass through code that is required. I notice that Martin Fowler would prefer it to be called the "Occasionally Useful Suggestion of Demeter"
 
-In the code that you are talking about, the RouteExtension class does have two good examples of meaningful encapsulation (services_town and retraces_existing_leg).
+In the code that you are talking about, RouteExtension.retraces_existing_leg is a good example of meaningful encapsulation.
 
 I have looked at the code to look for opportunities to meaningfully increase encapsulation, and have added RouteCandidate.ending_point, which is used from lines 107 and 115 of route_candidate.rb.
 
@@ -69,7 +69,6 @@ Overall, I don't see any meaningful increase in encapsulation by making this cha
 
 I don't consider this to be a meaningful violation. legs is an array property on the public interface and count is a language feature, so I don't think there would be any benefit to changing it to route_extension.leg_count.
 
-
 ### RouteExtension and RouteCandidate felt like both being routes that were used in slightly different contexts
 
 This is an interesting point, and I had a think about it, but in the end I mildly disagree for the following reasons.
@@ -77,9 +76,15 @@ This is an interesting point, and I had a think about it, but in the end I mildl
 - The retraces_existing_leg method is a good fit in RouteExtension but does not as much make sense in RouteCandidate. 
 - RouteExtension has a specific initialise method, and I prefer to only have one constructor for each class where possible.
 - RouteExtension.route_candidate encapsulates a useful bit of logic that would not be easily possible if the class didn't exist.
+- There is no overlap in the methods of the two classes
 
+### Really RoutePermutations was doing most (too much) of the work itself
 
-- really RoutePermutations was doing most (too much) of the work itself
+I have introduced a new RouteExtensions class, which removes a lot of code from RoutePermutations, and probably more importantly improves the readability of the code in RoutePermutations.
+
+TODO: fix up rubymine suggestions
+TODO: fix up non_retracing_permutations_from, shortest_distance and add to law of demeter comments
+ 
 - simple use of instance data, e.g. for the invariant route topology used in route permutations, could have reduced a lot of code
 - naming of some classes and methods i found questionable:
 

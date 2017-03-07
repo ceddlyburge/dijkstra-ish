@@ -1,5 +1,5 @@
-require_relative "network_topology.rb"
-require_relative "route_permutations"
+require_relative 'network_topology.rb'
+require_relative 'route_permutations'
 
 class Examples
 

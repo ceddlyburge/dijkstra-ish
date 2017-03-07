@@ -11,10 +11,6 @@ class RouteExtension
     RouteCandidate.new @legs + [@leg] if @leg != nil
   end
 
-  def services_town(town)
-    @legs.find { | leg | leg.from == town or leg.to == town } != nil
-  end
-
   def retraces_existing_leg
     legs.select { | leg | leg == @leg } != []
   end
