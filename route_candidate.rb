@@ -15,7 +15,7 @@ class RouteCandidate
   end
 
   def to_s
-    %Q[\nRoutes\nDistance #{distance.to_s}\n#{@legs.join("\n")}\nend\n]
+    %Q[\nRoutes\nDistance #{distance.to_s}\n#{@original_legs.join("\n")}\nend\n]
   end
 
   def ==(other_route_candidate)

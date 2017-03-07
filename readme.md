@@ -43,7 +43,7 @@ I think the statement "Encapsulation was weak" overstates the case.
 
 I have never come across a programmer that applies the Law of Demeter absolutely. I believe that the general wisdom is to weigh up the benefits of the encapsulation against the additional pass through code that is required. I notice that Martin Fowler would prefer it to be called the "Occasionally Useful Suggestion of Demeter"
 
-In the code that you are talking about, RouteExtension.retraces_existing_leg is a good example of meaningful encapsulation.
+There are plenty of cases of good encapsulation in the original submission, and only a small number of cases of debatable encapsulation.
 
 I have looked at the code to look for opportunities to meaningfully increase encapsulation, and have added RouteCandidate.ending_point, which is used from lines 107 and 115 of route_candidate.rb.
 
@@ -67,11 +67,11 @@ Overall, I don't see any meaningful increase in encapsulation by making this cha
 
 ##### Line 95: route_extension.atomic_routes.count
 
-I don't consider this to be a meaningful violation. legs is an array property on the public interface and count is a language feature, so I don't think there would be any benefit to changing it to route_extension.leg_count.
+I don't consider this to be a meaningful violation. atomic_routes is an array property on the public interface and count is a language feature, so I don't think there would be any benefit to changing it to route_extension.atomic_routes_count.
 
 ### RouteExtension and RouteCandidate felt like both being routes that were used in slightly different contexts
 
-This is an interesting point, and I had a think about it, but in the end I mildly disagree for the following reasons.
+This is an interesting point, and I had a think about it, but in the end I disagree for the following reasons.
 
 - The retraces_existing_leg method is a good fit in RouteExtension but does not as much make sense in RouteCandidate. 
 - RouteExtension has a specific initialise method, and I prefer to only have one constructor for each class where possible.
@@ -88,9 +88,9 @@ TODO: add comments to the public methods to state what the passed in variables s
 
 ### Simple use of instance data, e.g. for the invariant route topology used in route permutations, could have reduced a lot of code
 
-I have made network_topology an instance method of RoutePermutations.
+I have made network_topology an instance variable of RoutePermutations.
 
-
+TODO remove this line below
 - naming of some classes and methods i found questionable:
 
 ### AtomicRoute was awkward naming. a route being composed of atomic routes? would have preferred a route composed of legs or tracks. admittedly, the trains problem is a bit loose with the word 'route' but i found this distracting.
@@ -107,8 +107,10 @@ I have however, changed AtomicRoute to Leg.
 
 If I were to do this in the real world I would want to introduce Leg to the domain.
 
-e.g. in RouteExtension class:
-- #atomic_routes - was actually atomic routes without/before extension (or legs without last)
+### RouteExtension.atomic_routes was awkward naming - it was actually atomic routes without/before extension (or legs without last)
+
+atomic_routes was an array of AtomicRoute, so in that respect the variable was well named. I think in your head you have equated an array of AtomicRoute to a RouteCandidate, but they are distinct concepts.
+
 - #atomic_route - was actually the extending/last atomic route
 e.g NetworkTopology was really a NetworkTopologyParser. Again, could have been a stronger, more encapsulated network object, with some behaviour rather than just a holder of a collection of atomic routes.
 

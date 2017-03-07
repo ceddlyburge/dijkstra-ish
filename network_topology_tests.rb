@@ -6,7 +6,7 @@ class NetworkTopologyTests < Minitest::Test
     def test_singe_leg
         topology = NetworkTopology.new ["AB5"]
 
-        assert_equal [route("A", "B", 5)], topology.legs
+        assert_equal [route("A", "B", 5)], topology.original_legs
     end
 
     def test_two_legs

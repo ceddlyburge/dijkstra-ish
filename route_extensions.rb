@@ -23,7 +23,7 @@ class RouteExtensions
   end
 
   def capped_by_leg_count(max_legs)
-    copy_self_with_new_extensions @extensions.select{ | route_extension | route_extension.legs.count <= max_legs }
+    copy_self_with_new_extensions @extensions.select{ | route_extension | route_extension.original_legs.count <= max_legs }
   end
 
   def that_dont_retrace
