@@ -2,7 +2,6 @@ require 'simplecov'
 SimpleCov.start
 require 'minitest/autorun'
 require_relative 'leg'
-require_relative 'network_topology_parser.rb'
 
 class LegTests < Minitest::Test
   def test_to_s
