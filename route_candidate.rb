@@ -1,5 +1,5 @@
 class RouteCandidate
- attr_accessor :legs
+ attr_reader :legs
 
   # legs is expected to be an array of Leg
   def initialize(legs)
