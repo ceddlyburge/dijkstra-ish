@@ -1,4 +1,4 @@
-require_relative 'network_topology.rb'
+require_relative 'network_topology_parser.rb'
 require_relative 'route_permutations'
 
 class Examples
@@ -98,8 +98,7 @@ class Examples
     @route_permutations
 
     def initialize
-        leg_lines = File.readlines('network_topology.txt')
-        @network_topology = NetworkTopology.new leg_lines
+        @network_topology = NetworkTopologyParser.new File.readlines('network_topology.txt')
         puts @network_topology.legs
         @route_permutations = RoutePermutations.new @network_topology.legs
     end

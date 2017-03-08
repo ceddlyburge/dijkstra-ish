@@ -1,4 +1,4 @@
-class NetworkTopology
+class NetworkTopologyParser
   attr_reader :legs, :error_message
   
   # expecting an array of "AB2" type strings here, where "A" is the from location, "B" is the to location and "2" is the distance 

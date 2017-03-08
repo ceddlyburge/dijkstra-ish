@@ -85,6 +85,8 @@ I have introduced a new RouteExtensions class, which removes a lot of code from 
 TODO: fix up rubymine suggestions
 TODO: fix up non_retracing_permutations_from, shortest_distance and add to law of demeter comments
 TODO: add comments to the public methods to state what the passed in variables should be
+todo: make most of these private / immutable in route extensions   attr_reader :route_candidates, :network_topology, :extensions
+make newtork_topology immutable in routepermutations
 
 ### Simple use of instance data, e.g. for the invariant route topology used in route permutations, could have reduced a lot of code
 
@@ -115,8 +117,19 @@ However, I have renamed this to original_legs.
 
 ### RouteExtension.atomic_route was awkward naming - it was actually the extending/last atomic route
 
+I would argue that the variable name should be taken in context with the class name, in which case it makes more sense.
 
-e.g NetworkTopology was really a NetworkTopologyParser. Again, could have been a stronger, more encapsulated network object, with some behaviour rather than just a holder of a collection of atomic routes.
+However, I have renamed this to extension_leg.
+
+### NetworkTopology was really a NetworkTopologyParser. Again, could have been a stronger, more encapsulated network object, with some behaviour rather than just a holder of a collection of atomic routes.
+
+I have renamed NetworkTopology to NetworkTopologyParser, which I think is all that is required in the context. If I were to take it further I would create an immutable NetworkTopology class which NetworkTopologyParser would return.
+
+I can't think of any behaviour that I would want to put in the NetworkTopology class, or any ways to make it a stronger, more encapsulated object. 
+
+RoutePermutations.initial_route_candidates_starting_at_from and RouteExtensions.legs_that_extend_route_candidate describe the behaviour that could be added to NetworkTopologyParser, but I think they are better were they are. 
+
+There are no meaningful encapsulation issues with NetworkTopologyParser.
 
 There were a couple of other things to call out:
 - you lacked unit tests where they could have helped document expected behaviour of objects

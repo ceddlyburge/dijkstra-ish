@@ -1,16 +1,16 @@
 require 'minitest/autorun'
 require_relative 'leg'
-require_relative 'network_topology.rb'
+require_relative 'network_topology_parser.rb'
 
 class NetworkTopologyTests < Minitest::Test
     def test_singe_leg
-        topology = NetworkTopology.new ["AB5"]
+        topology = NetworkTopologyParser.new ["AB5"]
 
         assert_equal [route("A", "B", 5)], topology.original_legs
     end
 
     def test_two_legs
-        topology = NetworkTopology.new ["AB5", "BC4"]
+        topology = NetworkTopologyParser.new ["AB5", "BC4"]
 
         assert_equal [route("A", "B", 5),
                       route("B", "C", 4)], 
@@ -18,7 +18,7 @@ class NetworkTopologyTests < Minitest::Test
     end
 
     def test_three_legs
-        topology = NetworkTopology.new ["DE6", "AD5", "CE2"]
+        topology = NetworkTopologyParser.new ["DE6", "AD5", "CE2"]
 
         assert_equal [route("D", "E", 6),
                       route("A", "D", 5),
@@ -27,7 +27,7 @@ class NetworkTopologyTests < Minitest::Test
     end
 
     def test_invalid_input
-        topology = NetworkTopology.new ["DE5", "AD5", "CE?"]
+        topology = NetworkTopologyParser.new ["DE5", "AD5", "CE?"]
         
         assert_equal [], topology.legs
         refute_equal "", topology.error_message
