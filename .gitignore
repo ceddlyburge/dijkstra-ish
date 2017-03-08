@@ -5,3 +5,6 @@ network_topology.txt
 .idea
 
 gemfile.lock
+
+## simplecov code coverage results
+coverage
