@@ -61,7 +61,7 @@ One reason not to do this is that this is a very unlikely scenairo.
 
 However, the most important reason is that the RoutePermutations class is already coupled to RouteCandidate.distance and RouteExtension is already coupled to RouteCandidate. This means that from the point of the RoutePermutations class, RouteExtension cannot swap the RouteCandidate class for something else, and that RouteCandidate.distance cannot be removed without breaking the encapsulation. 
 
-Implementing route_candidate_distance would allow RouteExtension to implement caching or something similar, but there is no need to do this as the call is so simple. RouteCandidate.distance is more complicated, and could potentially benefit from caching or a change in the algorithm, and this is already possible with the original design.
+Implementing route_candidate_distance would allow RouteExtension to implement caching or something similar, but there is no need to do this as the call is so simple. RouteCandidate.distance is more complicated, and could potentially benefit from caching or a change in the algorithm, and this is already encapsulated in the original design.
 
 Overall, I don't see any meaningful increase in encapsulation by making this change.
 
@@ -82,18 +82,18 @@ This is an interesting point, and I had a think about it, but in the end I disag
 
 I have introduced a new RouteExtensions class, which removes a lot of code from RoutePermutations, and probably more importantly improves the readability of the code.
 
-TODO: fix up rubymine suggestions
-TODO: fix up non_retracing_permutations_from, shortest_distance and add to law of demeter comments
+TODO: fix up non_retracing_permutations_from, shortest_distance and add to law of demeter comments. add to documentation tests for these
 TODO: add comments to the public methods to state what the passed in variables should be
 todo: make most of these private / immutable in route extensions   attr_reader :route_candidates, :network_topology, :extensions
-make newtork_topology immutable in routepermutations
+todo: make newtork_topology immutable in routepermutations
+todo: make other things immutable where possible
+todo: rename route and desiredroute to leg in tests
+todo: fix up law of demeter in capped_by_distance(max_distance)
+tod: look at all files and make sure happy
 
 ### Simple use of instance data, e.g. for the invariant route topology used in route permutations, could have reduced a lot of code
 
-I have made network_topology an instance variable of RoutePermutations.
-
-TODO remove this line below
-- naming of some classes and methods i found questionable:
+I have made network_topology an instance variable of RoutePermutations. I'm not sure what I was thinking there.
 
 ### AtomicRoute was awkward naming. a route being composed of atomic routes? would have preferred a route composed of legs or tracks. admittedly, the trains problem is a bit loose with the word 'route' but i found this distracting.
 
@@ -111,7 +111,7 @@ If I were to do this in the real world I would want to introduce Leg to the doma
 
 ### RouteExtension.atomic_routes was awkward naming - it was actually atomic routes without/before extension (or legs without last)
 
-atomic_routes was an array of AtomicRoute, so I would argue that the variable was well named. I think you have imagined that an array of AtomicRoute is the same thing as a RouteCandidate, but they are distinct concepts.
+atomic_routes was an array of AtomicRoute, so I would argue that the variable was well named. I think you consider that an array of AtomicRoute is the same thing as a RouteCandidate, but they are distinct concepts.
 
 However, I have renamed this to original_legs.
 
@@ -125,15 +125,30 @@ However, I have renamed this to extension_leg.
 
 I have renamed NetworkTopology to NetworkTopologyParser, which I think is all that is required in the context. If I were to take it further I would create an immutable NetworkTopology class which NetworkTopologyParser would return.
 
-I can't think of any behaviour that I would want to put in the NetworkTopology class, or any ways to make it a stronger, more encapsulated object. 
+I can't think of any more behaviour that I would want to put in the NetworkTopology class, or any ways to make it a stronger, more encapsulated object. 
 
-RoutePermutations.initial_route_candidates_starting_at_from and RouteExtensions.legs_that_extend_route_candidate describe the behaviour that could be added to NetworkTopologyParser, but I think they are better were they are. 
+RoutePermutations.initial_route_candidates_starting_at_from and RouteExtensions.legs_that_extend_route_candidate could be added to NetworkTopologyParser, but I think they are better were they are. 
 
 There are no meaningful encapsulation issues with NetworkTopologyParser.
 
-There were a couple of other things to call out:
-- you lacked unit tests where they could have helped document expected behaviour of objects
-- a functional test asserting on the expected output, rather than just providing it would have been a bonus
-- you documented using a design by contract tool that you didn't actually use
+### You lacked unit tests where they could have helped document expected behaviour of objects
 
-My feeling was that you correctly grasped the importance of understandability, and managed to emphasis readability to aid in that, but did not really have a good hold of how your program structure was impacting its complexity.
+This is definitely a good idea, I have added expected behaviour tests for Leg, RouteCandidate and RouteExtension.
+
+I had considered it out of scope for a task that it is possible to complete in 2 hours.
+
+I haven't added expected behaviour tests for RouteExtensions, due to time constraints. If you need to know that I am able to write these tests, then please let me know and I will do them.
+
+I wrote this code using TDD, so all the code (except a couple of 'to_s' methods that I cheated on) was already covered.
+
+I don't think you learn anything more about my programming ability from these tests, and they do take a noticeable amount of time to write. I would suggest that you could make this assignment less time consuming, and no less informative, by removing the requirement for them.
+
+### A functional test asserting on the expected output, rather than just providing it would have been a bonus
+
+This is definitely a good idea, I have added fuctional tests. I had considered it out of scope for a task that it is possible to complete in 2 hours.
+
+I don't think you learn anything more about my programming ability from these tests, and they do take a noticeable amount of time to write. I would suggest that you could make this assignment less time consuming, and no less informative, by removing the requirement for them.
+
+### You documented using a design by contract tool that you didn't actually use
+
+This is true, it was more of a statement of intent. I think this still makes sense though, archictecture decisions can be made throughout the life of a project, and won't always be implemented immediately. I have updated the readme to make this clear.
