@@ -1,8 +1,6 @@
 require_relative 'route_extension'
 
 class RouteExtensions
-  attr_reader :route_candidates, :network_topology, :extensions
-
   # network_topology is expected to be a NetworkTopology, route_candidates is expected to be an array of RouteCandidate and extensions is expected to be an array of RouteExtension
   def initialize(network_topology, route_candidates, extensions = [])
     @network_topology = network_topology
