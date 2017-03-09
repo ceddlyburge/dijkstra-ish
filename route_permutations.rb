@@ -12,7 +12,7 @@ class RoutePermutations
   end
 
   def distance(desired_route)
-    found_route = non_retracing_permutations_from(desired_route.legs[0].from) \
+    found_route = non_retracing_permutations_from(desired_route.legs[0].from)
         .select{ | route | route == desired_route }.first
     
     return found_route == nil  ? 'NO SUCH ROUTE' : found_route.distance
@@ -20,6 +20,7 @@ class RoutePermutations
 
   def shortest_distance(from, to)
     shortest_route = shortest_route_candidate(route_candidates_ending_at_to(non_retracing_permutations_from(from), to))
+
     return shortest_route == nil  ? 'NO SUCH ROUTE' : shortest_route.distance
   end
 
