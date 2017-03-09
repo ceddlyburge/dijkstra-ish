@@ -19,59 +19,59 @@ class Examples
     def distance_a_b_c
         puts %Q[Distance of route A-B-C: #{
             @route_permutations.distance(
-                desired_route(
-                    [route('A', 'B'), 
-                     route('B', 'C')]))
+                desired_leg(
+                    [leg('A', 'B'),
+                     leg('B', 'C')]))
             }]
     end
 
     def distance_a_d
         puts %Q[Distance of route A-D: #{
             @route_permutations.distance(
-                desired_route([route('A', 'D')]))
+                desired_leg([leg('A', 'D')]))
             }]
     end
 
     def distance_a_d_c
         puts %Q[Distance of route A-D-C: #{
             @route_permutations.distance(
-                desired_route(
-                    [route('A', 'D'), 
-                     route('D', 'C')]))
+                desired_leg(
+                    [leg('A', 'D'),
+                     leg('D', 'C')]))
             }]
     end
 
     def distance_a_e_b_c_d
         puts %Q[Distance of route A-E-B-C-D: #{
             @route_permutations.distance(
-                desired_route(
-                    [route('A', 'E'), 
-                     route('E', 'B'), 
-                     route('B', 'C'), 
-                     route('C', 'D')]))
+                desired_leg(
+                    [leg('A', 'E'),
+                     leg('E', 'B'),
+                     leg('B', 'C'),
+                     leg('C', 'D')]))
             }]
     end
     
     def distance_a_e_d
         puts %Q[Distance of route A-E-D: #{
             @route_permutations.distance(
-                desired_route([route('A', 'E'), route('E', 'D')]))
+                desired_leg([leg('A', 'E'), leg('E', 'D')]))
             }]
     end
 
     def trips_c_c_maximum_3_stops
-        puts %Q[Number of trips starting at C and ending at C with a maximum of 3 stops: #{ \
-            @route_permutations \
-            .non_retracing_permutations_from('C') \
+        puts %Q[Number of trips starting at C and ending at C with a maximum of 3 stops: #{
+            @route_permutations
+            .non_retracing_permutations_from('C')
             .select{ | route_candidate | route_candidate.legs.last.to == 'C' && route_candidate.legs.count <= 3}
             .count
         }]
     end
 
     def trips_a_c_exactly_4_stops
-        puts %Q[Number of trips starting at A and ending at C with exactly 4 stops: #{ \
-            @route_permutations \
-            .all_permutations_capped_at_leg_count_from('A', 4) \
+        puts %Q[Number of trips starting at A and ending at C with exactly 4 stops: #{
+            @route_permutations
+            .all_permutations_capped_at_leg_count_from('A', 4)
             .select{ | route_candidate | route_candidate.legs.last.to == 'C' && route_candidate.legs.count == 4}
             .count
         }]
@@ -86,16 +86,13 @@ class Examples
     end
 
     def trips_c_c_distance_under_30
-        puts %Q[Number of trips starting at C and ending at C with distance < 30: #{ \
-            @route_permutations \
-            .all_permutations_capped_at_distance_from('C', 30) \
+        puts %Q[Number of trips starting at C and ending at C with distance < 30: #{
+            @route_permutations
+            .all_permutations_capped_at_distance_from('C', 30)
             .select{ | route_candidate | route_candidate.legs.last.to == 'C'}
             .count
         }]
     end
-
-    @network_topology
-    @route_permutations
 
     def initialize
         @network_topology = NetworkTopologyParser.new File.readlines('network_topology.txt')
@@ -103,11 +100,11 @@ class Examples
         @route_permutations = RoutePermutations.new @network_topology.legs
     end
 
-    def route(from, to)
+    def leg(from, to)
       return Leg.new from, to, 0
     end
 
-    def desired_route(legs)
+    def desired_leg(legs)
         RouteCandidate.new legs
     end
 
