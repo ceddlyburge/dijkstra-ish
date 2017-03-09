@@ -11,13 +11,15 @@ class RoutePermutations
     @network_topology = network_topology
   end
 
+  # desired_route is expected to be a RouteCandidate
   def distance(desired_route)
-    found_route = non_retracing_permutations_from(desired_route.legs[0].from)
+    found_route = non_retracing_permutations_from(desired_route.starting_point)
         .select{ | route | route == desired_route }.first
     
     return found_route == nil  ? 'NO SUCH ROUTE' : found_route.distance
   end
 
+  # from, to are expected to be strings
   def shortest_distance(from, to)
     shortest_route = shortest_route_candidate(route_candidates_ending_at_to(non_retracing_permutations_from(from), to))
 

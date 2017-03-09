@@ -45,7 +45,9 @@ I have never come across a programmer that applies the Law of Demeter absolutely
 
 There are plenty of cases of good encapsulation in the original submission, and only a small number of cases of debatable encapsulation.
 
-I have looked at the code to look for opportunities to meaningfully increase encapsulation, and have added RouteCandidate.ending_point, which is used from lines 107 and 115 of route_candidate.rb.
+I have looked at the code to look for opportunities to meaningfully increase encapsulation, and have done the following:
+- Added RouteCandidate.starting_point, which is used twice RouteCandidate.
+- Added RouteCandidate.ending_point, which is used once in  RoutePermutations.
 
 #### Specific Cases
 
@@ -82,12 +84,13 @@ This is an interesting point, and I had a think about it, but in the end I disag
 
 I have introduced a new RouteExtensions class, which removes a lot of code from RoutePermutations, and probably more importantly improves the readability of the code.
 
-TODO: fix up non_retracing_permutations_from, shortest_distance and add to law of demeter comments. add to documentation tests for these
 TODO: add comments to the public methods to state what the passed in variables should be
+
+not sure how to make things readonly in ruby. maybe not possible.
 todo: make most of these private / immutable in route extensions   attr_reader :route_candidates, :network_topology, :extensions
 todo: make newtork_topology immutable in routepermutations
 todo: make other things immutable where possible
-todo: rename route and desiredroute to leg in tests
+
 todo: fix up law of demeter in capped_by_distance(max_distance)
 tod: look at all files and make sure happy
 

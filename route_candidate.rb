@@ -10,7 +10,11 @@ class RouteCandidate
     @legs.map{ | leg | leg.distance }.inject(:+)
   end
 
-  def ending_point
+ def starting_point
+   @legs.first.from
+ end
+
+ def ending_point
    @legs.last.to
   end
 

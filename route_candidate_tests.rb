@@ -55,6 +55,16 @@ class RouteCandidateTests < Minitest::Test
     assert_equal false, route_candidate_1 == route_candidate_2
   end
 
+  def test_starting_point_is_first_from
+
+    leg_1 = leg 'first_from', @unimportant, @unimportant
+    leg_2 = leg @unimportant, @unimportant, @unimportant
+
+    route_candidate = RouteCandidate.new [leg_1, leg_2]
+
+    assert_equal leg_1.from, route_candidate.starting_point
+  end
+
   def test_ending_point_is_last_to
 
     leg_1 = leg @unimportant, @unimportant, @unimportant
