@@ -5,7 +5,7 @@ require_relative 'leg'
 require_relative 'route_extension.rb'
 require_relative 'route_candidate.rb'
 
-class RouteCandidateTests < Minitest::Test
+class RouteExtensionTests < Minitest::Test
 
   def test_retraces_existing_leg_true_if_extension_leg_in_original_legs
     route_extension = RouteExtension.new [a_leg, a_different_leg], a_leg
