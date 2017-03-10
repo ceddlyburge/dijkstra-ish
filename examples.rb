@@ -65,7 +65,7 @@ class Examples
         puts %Q[Number of trips starting at C and ending at C with a maximum of 3 stops: #{
             @route_permutations
             .non_retracing_permutations_from('C')
-            .select{ | route_candidate | route_candidate.legs.last.to == 'C' && route_candidate.legs.count <= 3}
+            .select{ | route_candidate | route_candidate.ending_point == 'C' && route_candidate.legs.count <= 3}
             .count
         }]
     end
@@ -74,7 +74,7 @@ class Examples
         puts %Q[Number of trips starting at A and ending at C with exactly 4 stops: #{
             @route_permutations
             .all_permutations_capped_at_leg_count_from('A', 4)
-            .select{ | route_candidate | route_candidate.legs.last.to == 'C' && route_candidate.legs.count == 4}
+            .select{ | route_candidate | route_candidate.ending_point == 'C' && route_candidate.legs.count == 4}
             .count
         }]
     end
@@ -91,7 +91,7 @@ class Examples
         puts %Q[Number of trips starting at C and ending at C with distance < 30: #{
             @route_permutations
             .all_permutations_capped_at_distance_from('C', 30)
-            .select{ | route_candidate | route_candidate.legs.last.to == 'C'}
+            .select{ | route_candidate | route_candidate.ending_point == 'C'}
             .count
         }]
     end

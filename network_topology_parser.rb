@@ -10,15 +10,14 @@ class NetworkTopologyParser
   end
 
   private
-  # the first two characters in the string can be anything, and will be used to indicate from and to
-  # the third character must be a number
-  # to make it more robust we could also check that the string length was exactly 3.
   def validate_legs
     @from_to_distances_as_single_chars
         .collect { | from_to_distance | validate_leg(from_to_distance) }
         .select { | error | error != nil }
   end
 
+  # the first two characters in the string can be anything, and will be used to indicate from and to
+  # the third character must be a number
   def validate_leg(from_to_distance)
     if from_to_distance.length != 3
       return %Q[Invalid Route "#{from_to_distance}": Route must be 3 characters long]

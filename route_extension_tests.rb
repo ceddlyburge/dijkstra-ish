@@ -44,5 +44,4 @@ class RouteExtensionTests < Minitest::Test
     @unimportant = 0
   end
 
-
 end

@@ -84,9 +84,6 @@ This is an interesting point, and I had a think about it, but in the end I disag
 
 I have introduced a new RouteExtensions class, which removes a lot of code from RoutePermutations, and probably more importantly improves the readability of the code.
 
-todo
-in email to neil say that network topology reading in from file is peripheral, so I didn't spend loads of time on it, but I was still marked down for it. If you want gold plating you should say so, instead of saying that you don't want it. Also, you were not just looking for evidence of oo practices, you were also specifically looking for evidence of oo contraventions, which is a different perspective.
-
 ### Simple use of instance data, e.g. for the invariant route topology used in route permutations, could have reduced a lot of code
 
 I have made network_topology an instance variable of RoutePermutations. I'm not sure what I was thinking there.

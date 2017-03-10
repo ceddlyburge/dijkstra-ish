@@ -1,7 +1,7 @@
 require_relative 'route_extension'
 
 class RouteExtensions
-  # network_topology is expected to be a NetworkTopology, route_candidates is expected to be an array of RouteCandidate and extensions is expected to be an array of RouteExtension
+  # network_topology is expected to be an array of Leg, route_candidates is expected to be an array of RouteCandidate and extensions is expected to be an array of RouteExtension
   def initialize(network_topology, route_candidates, extensions = [])
     @network_topology = network_topology
     @route_candidates = route_candidates
@@ -16,12 +16,10 @@ class RouteExtensions
     copy_self_with_new_extensions all_possible_leg_extensions
   end
 
-  # max_distance is expected to be an integer
   def capped_by_distance(max_distance)
     copy_self_with_new_extensions @extensions.select{ | route_extension | route_extension.route_candidate.distance < max_distance }
   end
 
-  # max_legs is expected to be an integer
   def capped_by_leg_count(max_legs)
     copy_self_with_new_extensions @extensions.select{ | route_extension | route_extension.original_legs.count <= max_legs }
   end
