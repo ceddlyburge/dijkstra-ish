@@ -31,7 +31,7 @@ class RouteExtensions
   end
 
   def that_arent_duplicates
-    copy_self_with_new_extensions @extensions.select { | route_extension | @route_candidates.find { | route_candidate | route_candidate == route_extension.route_candidate } == nil }
+    copy_self_with_new_extensions @extensions.select { | route_extension | route_candidate_exists(route_extension.route_candidate) == false }
   end
 
   private
@@ -52,6 +52,10 @@ class RouteExtensions
 
   def legs_that_extend_route_candidate(route_candidate)
     @network_topology.select { | leg | leg.from == route_candidate.ending_point }
+  end
+
+  def route_candidate_exists(other_route_candidate)
+    @route_candidates.find { | route_candidate | route_candidate == other_route_candidate } != nil
   end
 
 end

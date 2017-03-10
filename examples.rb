@@ -4,6 +4,7 @@ require_relative 'route_permutations'
 class Examples
 
     def examples
+      if @network_topology.errors.length == 0
         distance_a_b_c
         distance_a_d
         distance_a_d_c
@@ -14,6 +15,7 @@ class Examples
         shortest_distance_a_c
         shortest_distance_b_b
         trips_c_c_distance_under_30
+      end
     end
 
     def distance_a_b_c
@@ -95,7 +97,8 @@ class Examples
     end
 
     def initialize
-        @network_topology = NetworkTopologyParser.new File.readlines('network_topology.txt')
+        @network_topology = NetworkTopologyParser.new.parse File.readlines('network_topology.txt')
+        puts @network_topology.errors
         puts @network_topology.legs
         @route_permutations = RoutePermutations.new @network_topology.legs
     end

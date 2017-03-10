@@ -84,16 +84,33 @@ This is an interesting point, and I had a think about it, but in the end I disag
 
 I have introduced a new RouteExtensions class, which removes a lot of code from RoutePermutations, and probably more importantly improves the readability of the code.
 
-TODO: add comments to the public methods to state what the passed in variables should be
+todo
+in email to neil say that network topology reading in from file is peripheral, so I didn't spend loads of time on it, but I was still marked down for it. If you want gold plating you should say so, instead of saying that you don't want it. Also, you were not just looking for evidence of oo practices, you were also specifically looking for evidence of oo contraventions, which is a different perspective.
 
-not sure how to make things readonly in ruby. maybe not possible.
-todo: make most of these private / immutable in route extensions   attr_reader :route_candidates, :network_topology, :extensions
-todo: make newtork_topology immutable in routepermutations
-todo: make other things immutable where possible
+make immutable if possible
+maybe use .freeze if nothing else is available
+class Leg
+  attr_reader :from, :to, :distance
+class NetworkTopologyParser
+  attr_reader :legs, :error_message
+class RouteCandidate
+ attr_reader :legs
+class RouteExtension
+  attr_reader :original_legs, :extension_leg
+class RouteExtensions
+  # network_topology is expected to be a NetworkTopology, route_candidates is expected to be an array of RouteCandidate and extensions is expected to be an array of RouteExtension
+  def initialize(network_topology, route_candidates, extensions = [])
+    @network_topology = network_topology
+    @route_candidates = route_candidates
+    @extensions = extensions
+  end
+class RoutePermutations
+  attr_reader :network_topology
+maybe make method return values immutable as well
 
-todo: fix up law of demeter in capped_by_distance(max_distance)
-tod: look at all files and make sure happy
-
+todo: look at all files and make sure happy
+ NetworkTopologyParser could be improved
+ 
 ### Simple use of instance data, e.g. for the invariant route topology used in route permutations, could have reduced a lot of code
 
 I have made network_topology an instance variable of RoutePermutations. I'm not sure what I was thinking there.
