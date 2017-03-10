@@ -1,5 +1,8 @@
-# this file would be easily googleable from the problem description so don't include it
+# these files would be easily googleable from the problem description so don't include
 network_topology.txt
+functional_tests.rb
+network_topology_parser_tests.rb
+
 
 # rubymine settings folder
 .idea
