@@ -2,8 +2,9 @@ require_relative 'network_topology'
 
 class NetworkTopologyParser
   # expecting an array of "AB2" type strings here, where "A" is the from location, "B" is the to location and "2" is the distance
+  # returns a NetworkTopology
   def parse(from_to_distances_as_single_chars)
-    @from_to_distances_as_single_chars = from_to_distances_as_single_chars
+    @from_to_distances_as_single_chars = from_to_distances_as_single_chars.collect { | from_to_distance | from_to_distance.strip }
 
     (validate_legs.length > 0) ? NetworkTopology.new(validate_legs, []) : NetworkTopology.new([], create_legs)
   end
@@ -20,11 +21,11 @@ class NetworkTopologyParser
 
   def validate_leg(from_to_distance)
     if from_to_distance.length != 3
-      %Q[Invalid Route "#{from_to_distance}": Route must be 3 characters long]
+      return %Q[Invalid Route "#{from_to_distance}": Route must be 3 characters long]
     end
 
     if (Integer from_to_distance[2] rescue nil) == nil
-      %Q[Invalid Route "#{from_to_distance}": Third character of route must be a number]
+      return %Q[Invalid Route "#{from_to_distance}": Third character of route must be a number]
     end
   end
 

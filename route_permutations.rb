@@ -1,4 +1,4 @@
-require_relative 'route_extension'
+  require_relative 'route_extension'
 require_relative 'route_extensions'
 require_relative 'route_candidate'
 require_relative 'leg'

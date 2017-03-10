@@ -87,30 +87,6 @@ I have introduced a new RouteExtensions class, which removes a lot of code from 
 todo
 in email to neil say that network topology reading in from file is peripheral, so I didn't spend loads of time on it, but I was still marked down for it. If you want gold plating you should say so, instead of saying that you don't want it. Also, you were not just looking for evidence of oo practices, you were also specifically looking for evidence of oo contraventions, which is a different perspective.
 
-make immutable if possible
-maybe use .freeze if nothing else is available
-class Leg
-  attr_reader :from, :to, :distance
-class NetworkTopologyParser
-  attr_reader :legs, :error_message
-class RouteCandidate
- attr_reader :legs
-class RouteExtension
-  attr_reader :original_legs, :extension_leg
-class RouteExtensions
-  # network_topology is expected to be a NetworkTopology, route_candidates is expected to be an array of RouteCandidate and extensions is expected to be an array of RouteExtension
-  def initialize(network_topology, route_candidates, extensions = [])
-    @network_topology = network_topology
-    @route_candidates = route_candidates
-    @extensions = extensions
-  end
-class RoutePermutations
-  attr_reader :network_topology
-maybe make method return values immutable as well
-
-todo: look at all files and make sure happy
- NetworkTopologyParser could be improved
- 
 ### Simple use of instance data, e.g. for the invariant route topology used in route permutations, could have reduced a lot of code
 
 I have made network_topology an instance variable of RoutePermutations. I'm not sure what I was thinking there.
@@ -143,13 +119,13 @@ However, I have renamed this to extension_leg.
 
 ### NetworkTopology was really a NetworkTopologyParser. Again, could have been a stronger, more encapsulated network object, with some behaviour rather than just a holder of a collection of atomic routes.
 
-I have renamed NetworkTopology to NetworkTopologyParser, which I think is all that is required in the context. If I were to take it further I would create an immutable NetworkTopology class which NetworkTopologyParser would return.
+I have added NetworkTopologyParser, which returns a NetworkTopology.
 
 I can't think of any more behaviour that I would want to put in the NetworkTopology class, or any ways to make it a stronger, more encapsulated object. 
 
 RoutePermutations.initial_route_candidates_starting_at_from and RouteExtensions.legs_that_extend_route_candidate could be added to NetworkTopologyParser, but I think they are better were they are. 
 
-There are no meaningful encapsulation issues with NetworkTopologyParser.
+There were no meaningful encapsulation issues.
 
 ### You lacked unit tests where they could have helped document expected behaviour of objects
 
