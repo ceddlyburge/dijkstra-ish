@@ -3,7 +3,6 @@ network_topology.txt
 functional_tests.rb
 network_topology_parser_tests.rb
 
-
 # rubymine settings folder
 .idea
 

@@ -46,8 +46,8 @@ I have never come across a programmer that applies the Law of Demeter absolutely
 There are plenty of cases of good encapsulation in the original submission, and only a small number of cases of debatable encapsulation.
 
 I have looked at the code to look for opportunities to meaningfully increase encapsulation, and have done the following:
-- Added RouteCandidate.starting_point, which is used twice RouteCandidate.
-- Added RouteCandidate.ending_point, which is used once in  RoutePermutations.
+- Added RouteCandidate.starting_point
+- Added RouteCandidate.ending_point
 
 #### Specific Cases
 
@@ -75,7 +75,7 @@ I don't consider this to be a meaningful violation. atomic_routes is an array pr
 
 This is an interesting point, and I had a think about it, but in the end I disagree for the following reasons.
 
-- The retraces_existing_leg method is a good fit in RouteExtension but does not as much make sense in RouteCandidate. 
+- The retraces_existing_leg method is a good fit in RouteExtension but does not make as much sense in RouteCandidate. 
 - RouteExtension has a specific initialise method, and I prefer to only have one constructor for each class where possible.
 - RouteExtension.route_candidate encapsulates a useful bit of logic that would not be easily possible if the class didn't exist.
 - There is no overlap in the methods of the two classes
