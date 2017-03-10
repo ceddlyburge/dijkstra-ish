@@ -26,6 +26,7 @@ class RoutePermutations
     return shortest_route == nil  ? 'NO SUCH ROUTE' : shortest_route.distance
   end
 
+  # from is expected to be a string, max_distance is expected to be an int
   def all_permutations_capped_at_distance_from(from, max_distance)
     route_candidates = initial_route_candidates_starting_at_from(from)
 
@@ -42,6 +43,7 @@ class RoutePermutations
     return route_candidates
   end
 
+  # from is expected to be a string, max_legs is expected to be an int
   def all_permutations_capped_at_leg_count_from(from, max_legs)
     route_candidates = initial_route_candidates_starting_at_from(from)
 
@@ -58,6 +60,7 @@ class RoutePermutations
     return route_candidates
   end
 
+  # from is expected to be a string
   def non_retracing_permutations_from(from)
     route_candidates = initial_route_candidates_starting_at_from(from)
 
