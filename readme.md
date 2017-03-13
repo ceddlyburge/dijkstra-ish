@@ -86,7 +86,7 @@ I have introduced a new RouteExtensions class, which removes a lot of code from 
 
 ### Simple use of instance data, e.g. for the invariant route topology used in route permutations, could have reduced a lot of code
 
-I have made network_topology an instance variable of RoutePermutations. I'm not sure what I was thinking there.
+I have made network_topology an instance variable of RoutePermutations. I'm not sure what I was thinking there. The phrase "could have reduecd a lot of code" is a heavy exaggeration though.
 
 ### AtomicRoute was awkward naming. a route being composed of atomic routes? would have preferred a route composed of legs or tracks. admittedly, the trains problem is a bit loose with the word 'route' but i found this distracting.
 

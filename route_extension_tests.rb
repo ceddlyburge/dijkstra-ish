@@ -1,6 +1,4 @@
-require 'simplecov'
-SimpleCov.start
-require 'minitest/autorun'
+require_relative 'test_helper' 
 require_relative 'leg'
 require_relative 'route_extension.rb'
 require_relative 'route_candidate.rb'
