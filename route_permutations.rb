@@ -12,6 +12,14 @@ class RoutePermutations
   end
 
   # desired_route is expected to be a RouteCandidate
+  def duration(desired_route)
+    found_route = non_retracing_permutations_from(desired_route.starting_point)
+                      .select{ | route | route == desired_route }.first
+
+    return found_route == nil  ? 'NO SUCH ROUTE' : found_route.duration
+  end
+
+  # desired_route is expected to be a RouteCandidate
   def distance(desired_route)
     found_route = non_retracing_permutations_from(desired_route.starting_point)
         .select{ | route | route == desired_route }.first
@@ -34,6 +42,22 @@ class RoutePermutations
                        .that_arent_duplicates
                        .capped_by_distance(max_distance)
                        .route_candidates
+
+      route_candidates += new_route_candidates
+    end while new_route_candidates.count > 0
+
+    return route_candidates
+  end
+
+  def all_permutations_capped_at_duration_from(from, max_duration)
+    route_candidates = initial_route_candidates_starting_at_from(from)
+
+    begin
+      new_route_candidates = RouteExtensions.new(@network_topology, route_candidates)
+                                 .all_possible_single_leg_extensions
+                                 .that_arent_duplicates
+                                 .capped_by_duration(max_duration)
+                                 .route_candidates
 
       route_candidates += new_route_candidates
     end while new_route_candidates.count > 0

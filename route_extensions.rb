@@ -20,6 +20,10 @@ class RouteExtensions
     copy_self_with_new_extensions @extensions.select{ | route_extension | route_extension.route_candidate.distance < max_distance }
   end
 
+  def capped_by_duration(max_duration)
+    copy_self_with_new_extensions @extensions.select{ | route_extension | route_extension.route_candidate.duration < max_duration }
+  end
+
   def capped_by_leg_count(max_legs)
     copy_self_with_new_extensions @extensions.select{ | route_extension | route_extension.original_legs.count <= max_legs }
   end

@@ -10,6 +10,18 @@ class RouteCandidate
     @legs.map{ | leg | leg.distance }.inject(:+)
   end
 
+ def duration
+   duration_in_transit + duration_stopped_at_station
+ end
+
+ def duration_in_transit
+   @legs.map{ | leg | leg.distance }.inject(:+)
+ end
+
+ def duration_stopped_at_station
+   ((@legs.count() -1) * 2)
+ end
+
  def starting_point
    @legs.first.from
  end
